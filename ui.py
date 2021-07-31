@@ -1,23 +1,30 @@
 """
 created by Nagaj at 31/07/2021
 """
-from tkinter import Tk, Canvas
+from tkinter import Tk, Canvas, PhotoImage
+from constants import CANVAS_WIDTH, CANVAS_HEIGHT, CANVAS_LOGO_PATH
 
 
 class PwdUI(Tk):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.canvas = None
 
     def config(self, title, image=None, is_center=False, **kwargs):
         self.title(title)
-        canvas = Canvas(self, width=200, height=224)
-        canvas.grid(column=1, row=1)
         super().config(**kwargs)
-        if is_center:
-            self.__center()
         if image:
             self.iconbitmap(image)
+
+        if is_center:
+            self.__center()
+
+    def create_canvas(self):
+        self.canvas = Canvas(self, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
+        pwd_manager_logo = PhotoImage(file=CANVAS_LOGO_PATH)
+        self.canvas.create_image(100, 100, image=pwd_manager_logo)
+        # self.canvas.grid(row=0, column=1)
+        self.canvas.pack()
 
     def __center(self) -> None:
         """
